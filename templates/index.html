@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Emotion Detector</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    <style>
+        body { text-align: center; background: #000; }
+        img { width: 30%; border: 10px solid white; }
+    </style>
 </head>
 <body>
-    <h1>Real-Time Emotion Detector</h1>
-    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    <h1 style="color:white;">Emotion Detection</h1>
+    <img src="{{ url_for('video_feed') }}" alt="Video Feed">
 </body>
 </html>
