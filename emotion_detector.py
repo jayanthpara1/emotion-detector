@@ -2,15 +2,20 @@ import cv2
 import numpy as np
 from keras.models import load_model
 
-model = load_model('model/emotion_model.h5')
-emotion_dict = {0: 'Angry', 1: 'Happy', 2: 'Sad', 3: 'Neutral', 4: 'Cool', 5: 'Surprised'}
+# Load the pre-trained model
+model = load_model('emotion_model.h5')
+
+# Define the emotion labels
+emotions = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
 
 def get_emotion(frame):
-    # Preprocess the frame for prediction
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    resized = cv2.resize(gray, (48, 48))
-    normalized = resized / 255.0
-    reshaped = np.reshape(normalized, (1, 48, 48, 1))
-    prediction = model.predict(reshaped)
-    emotion_index = np.argmax(prediction)
-    return emotion_dict[emotion_index], max(prediction[0])
+    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    resized_frame = cv2.resize(gray_frame, (48, 48))
+    reshaped_frame = resized_frame.reshape(1, 48, 48, 1) / 255.0
+
+    predictions = model.predict(reshaped_frame)
+    emotion_idx = np.argmax(predictions)
+    emotion = emotions[emotion_idx]
+    confidence = predictions[0][emotion_idx]
+
+    return emotion, confidence
